@@ -2,28 +2,73 @@ import { useState } from 'react'
 import './Ficha.css'
 
 
-type Modulo = {
-
-}
+type ModuloItem = Divisorias | Texto;
 
   type Divisorias = {
     nome: string;
-    tipo: Divisorias | Modulo | null
+    tipo: 'divisoria';
+    modulo: ModuloItem[];
   }
 
+  type Texto = {
+    tipo: 'texto';
+    conteudo: string;
+  }
 
-  const textos = ["aaaaaaaa", "bbbb", "aaaaaaaa"];
-
-  const conteudo: Divisorias = [
+  const arrayBase: Divisorias[] = [
     {
-      nome: "aaaaaaaaa",
-      tipo: [
+      nome: "1",
+      tipo: "divisoria",
+      modulo: [
         {
-          nome: "bbbbb"
+              tipo: "texto",
+              conteudo: 'texto1'
+        },
+        {
+          nome: "bbbbb",
+          tipo: "divisoria",
+          modulo: [
+                      {
+                        tipo: "texto",
+                        conteudo: 'texto1'
+                      }
+                  ]
         }
-      ]
-    }
+      ],
+       
+    },
   ];
+
+
+
+  function RenderDivisoria({item}: {item: ModuloItem}){
+      if(item.tipo === 'texto')
+        {
+          return <div>
+                    <p>
+                      {item.conteudo}
+                    </p>
+                 </div>
+        }
+
+      if(item.tipo === 'divisoria')
+        {
+          return(
+              <div  className='divisoria'>
+                <p>{item.nome}</p>
+                {item.modulo.map((conteudo, index) =>
+                  (
+                    <div>
+                      <RenderDivisoria key={index} item={conteudo}/>
+                    </div>
+
+
+                  ))}
+             </div>
+          );
+          
+        }
+      }
     
 
 
@@ -34,22 +79,11 @@ function Ficha() {
   return (
       <div>
 
-        {conteudo.map((conteudo, index) =>
+        {arrayBase.map((conteudo, index) =>
           (
-            <div key={index}>  {conteudo.nome} 
-
-              <p>{index}</p>
-            
-            </div>
-
-            
+            <RenderDivisoria key={index} item={conteudo}/>
           )
         )}
-
-        
-
-
-
       </div>
     
   )
