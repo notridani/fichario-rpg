@@ -13,6 +13,7 @@ type ModuloItem = Divisorias | Texto;
     nome: string;
     tipo: 'divisoria';
     modulo: ModuloItem[];
+    tamanho: {width: number, heigth: number}
   }
 
   type Texto = {
@@ -24,6 +25,7 @@ type ModuloItem = Divisorias | Texto;
     {
       nome: "1",
       tipo: "divisoria",
+      tamanho: {width: 100, heigth: 100},
       modulo: [
         {
               tipo: "texto",
@@ -32,6 +34,7 @@ type ModuloItem = Divisorias | Texto;
         {
           nome: "bbbbb",
           tipo: "divisoria",
+          tamanho: {width: 100, heigth: 100},
           modulo: [
                       {
                         tipo: "texto",
@@ -59,7 +62,7 @@ type ModuloItem = Divisorias | Texto;
       if(item.tipo === 'divisoria')
         {
           return(
-            <ResizableBox  width={200} height={200} minConstraints={[100, 100]} maxConstraints={[100, 100]} resizeHandles={['se']} style={{ border: '2px solid #4ade80', background: '#bbf7d0' }}>
+            <ResizableBox  width={200} height={200} resizeHandles={['se']} style={{ border: '2px solid #4ade80', background: '#bbf7d0' }}>
 
               <div  className='divisoria'>
                 <p>{item.nome}</p>
